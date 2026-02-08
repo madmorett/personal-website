@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Articles — Matheus Morett</title>
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <meta name="description" content="Articles on engineering leadership, teams, and building software at scale by Matheus Morett." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Articles — Matheus Morett" />
+    <meta property="og:description" content="Articles on engineering leadership, teams, and building software at scale." />
+    <meta property="og:url" content="<%= siteUrl %>/articles/" />
+    <meta property="og:image" content="<%= siteUrl %>/images/eu.jpeg" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Morett_the_best" />
+    <meta name="twitter:title" content="Articles — Matheus Morett" />
+    <meta name="twitter:description" content="Articles on engineering leadership, teams, and building software at scale." />
+    <meta name="twitter:image" content="<%= siteUrl %>/images/eu.jpeg" />
+
+    <link rel="canonical" href="<%= siteUrl %>/articles/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav nav--scrolled">
+      <div class="nav__inner">
+        <a href="/" class="nav__logo">Matheus Morett</a>
+        <div class="nav__links">
+          <a href="/#about" class="nav__link">About</a>
+          <a href="/#writing" class="nav__link">Writing</a>
+          <a href="/#contact" class="nav__link">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Article List -->
+    <section class="blog-list">
+      <div class="blog-list__inner">
+        <h1 class="blog-list__title">Articles</h1>
+        <p class="blog-list__subtitle">Thoughts on engineering leadership, teams, and building software at scale.</p>
+
+        <div class="articles__grid">
+          <% if (articles.length === 0) { %>
+          <p class="articles__empty">No articles yet. Check back soon.</p>
+          <% } %>
+          <% articles.forEach(function(article) { %>
+          <a href="/articles/<%= article.slug %>/" class="article-card">
+            <span class="article-card__date"><%= article.date %></span>
+            <h2 class="article-card__title"><%= article.title %></h2>
+            <p class="article-card__description"><%= article.description %></p>
+            <% if (article.tags && article.tags.length > 0) { %>
+            <div class="article-card__tags">
+              <% article.tags.forEach(function(tag) { %>
+              <span class="article-card__tag"><%= tag %></span>
+              <% }); %>
+            </div>
+            <% } %>
+          </a>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <span class="footer__copy">&copy; 2026 Matheus Morett</span>
+        <div class="footer__links">
+          <a href="https://www.linkedin.com/in/matheusmorett/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/matheusmorett2" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://x.com/Morett_the_best" target="_blank" rel="noreferrer">X</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

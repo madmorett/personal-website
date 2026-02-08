@@ -25,7 +25,7 @@ module.exports = merge(
             https: false,
             allowedHosts: 'all',
             hot: false,
-            watchFiles: ['src/**', 'static/**'],
+            watchFiles: ['src/**', 'static/**', 'content/**'],
             static:
             {
                 watch: true,
