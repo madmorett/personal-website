@@ -2309,6 +2309,11 @@ caniuse-lite@^1.0.30001663:
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001669.tgz"
   integrity sha512-DlWzFDJqstqtIVx1zeSpIMLjunf5SmwOw0N2Ck/QSQdS8PLS4+9HrLaYei4w8BIAL7IB/UEDu889d8vhCTPA0w==
 
+canvas-confetti@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.npmjs.org/canvas-confetti/-/canvas-confetti-1.9.4.tgz"
+  integrity sha512-yxQbJkAVrFXWNbTUjPqjF7G+g6pDotOUHGbkZq2NELZUMDpiJ85rIEazVb8GTaAptNW2miJAXbs1BtioA251Pw==
+
 chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"
@@ -3710,6 +3715,11 @@ gray-matter@^4.0.3:
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
 
+gsap@^3.15.0:
+  version "3.15.0"
+  resolved "https://registry.npmjs.org/gsap/-/gsap-3.15.0.tgz"
+  integrity sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A==
+
 gunzip-maybe@^1.4.2:
   version "1.4.2"
   resolved "https://registry.npmjs.org/gunzip-maybe/-/gunzip-maybe-1.4.2.tgz"
@@ -4351,6 +4361,11 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+lil-gui@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.npmjs.org/lil-gui/-/lil-gui-0.16.1.tgz"
+  integrity sha512-6wnnfBvQxJYRhdLyIA+w5b8utwbuVxNmtpTXElm36OSgHa8lyKp00Xz/4AEx3kvodT0AJYgbfadCFWAM0Q8DgQ==
 
 lilconfig@^3.0.0:
   version "3.1.2"

@@ -1,6 +1,7 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 const { RawSource } = require('webpack-sources')
 const path = require('path')
 const { getArticles } = require('./build-articles')
@@ -36,19 +37,11 @@ const blogListPlugin = new HtmlWebpackPlugin({
     minify: true
 })
 
-// Generate article cards HTML for homepage injection
-const articleCardsHtml = articles.slice(0, 4).map(article => `
-    <a href="/articles/${article.slug}/" class="article-card">
-        <span class="article-card__date">${article.date}</span>
-        <h3 class="article-card__title">${article.title}</h3>
-        <p class="article-card__description">${article.description}</p>
-        ${article.tags.length > 0 ? `<div class="article-card__tags">${article.tags.map(t => `<span class="article-card__tag">${t}</span>`).join('')}</div>` : ''}
-    </a>
-`).join('')
-
-const homepageArticlesContent = articles.length > 0
-    ? articleCardsHtml
-    : '<p class="articles__empty">Articles coming soon.</p>'
+// Dados leves dos artigos injetados na cena 3D (satélites em órbita).
+// Sem htmlContent: o modal mostra só título, data, descrição e tags.
+const satelliteArticles = articles.map(({ title, date, description, tags, slug }) => ({
+    title, date, description, tags, slug
+}))
 
 module.exports = {
     entry: {
@@ -70,15 +63,16 @@ module.exports = {
                 { from: path.resolve(__dirname, '../static') }
             ]
         }),
+        // Injeta os artigos na cena 3D
+        new webpack.DefinePlugin({
+            __ARTICLES__: JSON.stringify(satelliteArticles)
+        }),
         // Homepage
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../src/index.html'),
             filename: 'index.html',
             chunks: ['main'],
-            minify: true,
-            templateParameters: {
-                articleCards: homepageArticlesContent
-            }
+            minify: true
         }),
         // Blog listing
         blogListPlugin,
@@ -105,12 +99,20 @@ module.exports = {
             {
                 test: /\.(html)$/,
                 exclude: [
-                    path.resolve(__dirname, '../src/blog'),
-                    path.resolve(__dirname, '../src/index.html')
+                    path.resolve(__dirname, '../src/blog')
                 ],
                 use:
                 [
-                    'html-loader'
+                    {
+                        loader: 'html-loader',
+                        options: {
+                            // Assets absolutos (/favicon, /icons, /sound) são copiados
+                            // pelo CopyWebpackPlugin — o loader não deve resolvê-los.
+                            sources: {
+                                urlFilter: (attribute, value) => !value.startsWith('/')
+                            }
+                        }
+                    }
                 ]
             },
 

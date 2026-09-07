@@ -3,148 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matheus Morett — CTO & Engineering Leader</title>
+    <title>Matheus Morett - CTO & Engineering Leader</title>
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <meta charset="utf-8" />
     <meta
       name="description"
-      content="Matheus Morett is a CTO & Engineering Leader with 10+ years building teams that build great software."
+      content="Matheus Morett is CTO at Monest, writing about engineering leadership, scaling teams and building software that lasts."
     />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Matheus Morett — CTO & Engineering Leader" />
-    <meta property="og:description" content="I build teams that build great software." />
+    <!-- Open Graph meta tags (for LinkedIn, Facebook, etc.) -->
+    <meta property="og:title" content="Matheus Morett - CTO & Engineering Leader" />
+    <meta property="og:description" content="Matheus Morett is CTO at Monest, writing about engineering leadership, scaling teams and building software that lasts." />
     <meta property="og:image" content="https://matheusmorett.com/images/eu.jpeg" />
     <meta property="og:url" content="https://matheusmorett.com" />
     <meta property="og:type" content="website" />
 
-    <!-- Twitter Card -->
+    <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Morett_the_best" />
-    <meta name="twitter:title" content="Matheus Morett — CTO & Engineering Leader" />
-    <meta name="twitter:description" content="I build teams that build great software." />
+    <meta name="twitter:title" content="Matheus Morett - CTO & Engineering Leader" />
+    <meta name="twitter:description" content="Matheus Morett is CTO at Monest, writing about engineering leadership, scaling teams and building software that lasts." />
     <meta name="twitter:image" content="https://matheusmorett.com/images/eu.jpeg" />
     <meta name="twitter:url" content="https://matheusmorett.com" />
+    <meta name="twitter:creator" content="@Morett_the_best" />
 
     <link rel="canonical" href="https://matheusmorett.com/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <!-- Three.js background -->
-    <canvas class="webgl"></canvas>
-
-    <!-- Navigation -->
-    <nav class="nav">
-      <div class="nav__inner">
-        <a href="#" class="nav__logo">Matheus Morett</a>
-        <div class="nav__links">
-          <a href="#about" class="nav__link">About</a>
-          <a href="#writing" class="nav__link">Writing</a>
-          <a href="#contact" class="nav__link">Contact</a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="hero" id="hero">
-      <div class="hero__content">
-        <h1 class="hero__name" data-reveal>Matheus Morett</h1>
-        <p class="hero__title" data-reveal>CTO & Engineering Leader</p>
-        <p class="hero__tagline" data-reveal data-typed="I build teams that build great software."></p>
-        <div class="hero__socials" data-reveal>
-          <a href="https://www.linkedin.com/in/matheusmorett/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    <div class="background">
+      <canvas class="webgl"></canvas>
+      <audio controls style="display: none" id="music">
+        <source src="/sound/music.mp3" type="audio/ogg" />
+      </audio>
+      <div class="container">
+        <div class="content">
+          <a href="/articles/"> Articles </a>
+          <a
+            href="https://github.com/madmorett"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github
           </a>
-          <a href="https://github.com/matheusmorett2" target="_blank" rel="noreferrer" aria-label="GitHub">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <a
+            href="https://www.linkedin.com/in/matheusmorett/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Linkedin
           </a>
-          <a href="https://www.youtube.com/channel/UCbDnkQGDPvCEnXLMm5oFz5g" target="_blank" rel="noreferrer" aria-label="YouTube">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+          <a
+            href="https://www.youtube.com/channel/UCbDnkQGDPvCEnXLMm5oFz5g"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Youtube
           </a>
-          <a href="https://x.com/Morett_the_best" target="_blank" rel="noreferrer" aria-label="X / Twitter">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-6.8-8.5L19.5 4h-2l-5.2 6.3L8 4H4z"/></svg>
+          <a
+            href="https://www.instagram.com/madmorett/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram
           </a>
-          <a href="https://www.instagram.com/madmorett/" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
+        </div>
+        <div class="sound">
+          <img
+            id="volume-on"
+            style="display: none"
+            alt="turn the music off"
+            src="/icons/volume-2.svg"
+            height="1.5rem"
+          />
+          <img
+            id="volume-off"
+            alt="turn the music on"
+            src="/icons/volume-x.svg"
+            height="1.5rem"
+          />
         </div>
       </div>
-    </section>
-
-    <!-- About -->
-    <section class="section" id="about" data-reveal>
-      <div class="section__inner">
-        <h2 class="section__title">About</h2>
-        <p class="about__bio">
-          I've spent the last 10+ years building and leading engineering teams at startups from early stage to scale.
-          I believe great software comes from great teams — and great teams come from clear vision, strong craft, and trust.
-        </p>
-        <p class="about__bio">
-          As a fullstack engineer turned engineering leader, I bring deep technical depth to every decision.
-          My focus is on building scalable, testable, and maintainable systems — and the teams to sustain them.
-        </p>
-        <div class="about__highlights">
-          <div class="about__stat">
-            <span class="about__stat-number" data-scramble="10+">10+</span>
-            <span class="about__stat-label">Years Building</span>
-          </div>
-          <div class="about__stat">
-            <span class="about__stat-number" data-scramble="80+">80+</span>
-            <span class="about__stat-label">Engineers Led</span>
-          </div>
-          <div class="about__stat">
-            <span class="about__stat-number" data-scramble="4x">4x</span>
-            <span class="about__stat-label">MRR Growth YOY</span>
-          </div>
-        </div>
+      <div id="satellite-tooltip"></div>
+      <div id="music-by" style="opacity: 0">
+        Music by: Karl Casey @ White Bat Audio
       </div>
-    </section>
-
-    <!-- Writing -->
-    <section class="section" id="writing" data-reveal>
-      <div class="section__inner">
-        <h2 class="section__title">Writing</h2>
-        <p class="section__subtitle">Thoughts on engineering leadership, teams, and building software at scale.</p>
-        <div class="articles__grid" id="articles-grid">
-          <%= articleCards %>
-        </div>
-        <a href="/articles/" class="articles__view-all">View all articles &rarr;</a>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section section--cta" id="contact" data-reveal>
-      <div class="section__inner section__inner--centered">
-        <h2 class="cta__heading">Let's build something together.</h2>
-        <p class="cta__text">
-          Whether you're looking for a technical leader or want to join a team that values craft — let's talk.
-        </p>
-        <div class="cta__buttons">
-          <a href="https://www.linkedin.com/in/matheusmorett/" target="_blank" rel="noreferrer" class="cta__btn cta__btn--primary">LinkedIn</a>
-          <a href="https://x.com/Morett_the_best" target="_blank" rel="noreferrer" class="cta__btn cta__btn--secondary">X / Twitter</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer__inner">
-        <span class="footer__copy">&copy; 2026 Matheus Morett</span>
-        <div class="footer__links">
-          <a href="https://www.linkedin.com/in/matheusmorett/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://github.com/matheusmorett2" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://www.youtube.com/channel/UCbDnkQGDPvCEnXLMm5oFz5g" target="_blank" rel="noreferrer">YouTube</a>
-          <a href="https://x.com/Morett_the_best" target="_blank" rel="noreferrer">X</a>
-        </div>
-      </div>
-    </footer>
+    </div>
   </body>
 </html>
