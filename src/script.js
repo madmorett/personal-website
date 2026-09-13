@@ -10,10 +10,7 @@ import { createRocket, updateRocketParticles } from "./scripts/rocket";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { GUI } from "lil-gui";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-import {
-  initArticleSatellites,
-  updateArticleSatellites,
-} from "./scripts/articles-satellites";
+import { createWisdomTablet } from "./scripts/wisdom-tablet";
 import { initStars } from "./scripts/interactive-stars";
 import { isMobile } from "./utils";
 import { updateParallax } from "./scripts/parallax";
@@ -229,11 +226,6 @@ cameraFolder.open();
 createRocket(planetGroup, camera, scene);
 
 /**
- * Artigos em órbita
- */
-initArticleSatellites(planetGroup, camera);
-
-/**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
@@ -247,6 +239,10 @@ renderer.shadowMap.enabled = true;
 
 // Call the interactive stars module
 initStars(scene, camera, renderer);
+
+// A Tábua da Sabedoria (lista + leitor de artigos). Depois de initStars
+// porque o listener de mousemove das estrelas reseta o cursor.
+createWisdomTablet(planetGroup, camera, platRadius);
 
 /**
  * Tamanho
@@ -275,12 +271,12 @@ const cammeraOutToShowAboutMe = isMobile ? 50 : 30
 let lastCameraPositionZ = camera.position.z; // Store the initial camera position
 
 window.addEventListener("wheel", (event) => {
-  event.preventDefault();
-
-  // If "About Me" is shown, prevent further zoom actions
+  // Com um modal aberto o scroll é do modal (o leitor de artigos é longo),
+  // não da câmera — por isso o preventDefault vem depois desta checagem.
   if (window.aboutMeShown || window.starModalIsOpened) {
     return;
   }
+  event.preventDefault();
 
   // Track the previous camera position
   const previousCameraPositionZ = camera.position.z;
@@ -399,8 +395,6 @@ const tick = () => {
   flagMesh.geometry.attributes.position.needsUpdate = true;
 
   updateRocketParticles(); // Atualiza a posição das partículas de fogo do foguete
-
-  updateArticleSatellites(); // Move os artigos em órbita
 
   // Render
   renderer.render(scene, camera);

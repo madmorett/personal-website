@@ -37,10 +37,18 @@ const blogListPlugin = new HtmlWebpackPlugin({
     minify: true
 })
 
-// Dados leves dos artigos injetados na cena 3D (satélites em órbita).
-// Sem htmlContent: o modal mostra só título, data, descrição e tags.
-const satelliteArticles = articles.map(({ title, date, description, tags, slug }) => ({
+// Dados leves dos artigos injetados na cena 3D (lista da Tábua da Sabedoria).
+// O texto completo vai em articles/<slug>.json e é buscado sob demanda.
+const tabletArticles = articles.map(({ title, date, description, tags, slug }) => ({
     title, date, description, tags, slug
+}))
+
+const articleJsonAssets = articles.map(a => ({
+    filename: `articles/${a.slug}.json`,
+    source: JSON.stringify({
+        title: a.title, date: a.date, description: a.description, tags: a.tags,
+        slug: a.slug, originalUrl: a.originalUrl, htmlContent: a.htmlContent
+    })
 }))
 
 module.exports = {
@@ -65,7 +73,7 @@ module.exports = {
         }),
         // Injeta os artigos na cena 3D
         new webpack.DefinePlugin({
-            __ARTICLES__: JSON.stringify(satelliteArticles)
+            __ARTICLES__: JSON.stringify(tabletArticles)
         }),
         // Homepage
         new HtmlWebpackPlugin({
@@ -79,13 +87,18 @@ module.exports = {
         // Individual articles
         ...articleHtmlPlugins,
         new MiniCSSExtractPlugin(),
-        // Emit sitemap.xml
+        // Emit sitemap.xml + one JSON per article for the in-scene reader
         {
             apply(compiler) {
                 compiler.hooks.thisCompilation.tap('SitemapPlugin', (compilation) => {
                     compilation.hooks.processAssets.tap(
                         { name: 'SitemapPlugin', stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL },
-                        () => { compilation.emitAsset('sitemap.xml', new RawSource(sitemapXml)) }
+                        () => {
+                            compilation.emitAsset('sitemap.xml', new RawSource(sitemapXml))
+                            articleJsonAssets.forEach(({ filename, source }) => {
+                                compilation.emitAsset(filename, new RawSource(source))
+                            })
+                        }
                     )
                 })
             }
