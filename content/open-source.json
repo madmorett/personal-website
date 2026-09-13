@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Bullpane",
+    "tagline": "The self-hosted BullMQ dashboard you can put in front of production.",
+    "description": "Queues, jobs, failures and Redis health across multiple connections, in one place — without your data leaving your network. Job search and bulk actions (retry, remove, promote), logs and stack traces per job, BullMQ Pro groups, schedulers and metrics. MIT core; Pro adds alerts, roles and audit log.",
+    "tags": ["bullmq", "redis", "dashboard", "self-hosted", "typescript"],
+    "links": [
+      { "label": "bullpane.com", "url": "https://bullpane.com/" },
+      { "label": "GitHub", "url": "https://github.com/madmorett/bullpane" }
+    ]
+  },
+  {
+    "name": "bullmq-fanout",
+    "tagline": "Turn BullMQ into a message bus.",
+    "description": "Publish one domain event to many queues, each with its own worker, retries and failure domain. Works with BullMQ v5, v6 and Pro.",
+    "tags": ["bullmq", "domain-events", "event-driven", "fan-out", "typescript"],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/madmorett/bullmq-fanout" },
+      { "label": "npm", "url": "https://www.npmjs.com/package/bullmq-fanout" }
+    ]
+  }
+]

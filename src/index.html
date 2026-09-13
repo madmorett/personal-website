@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Matheus Morett - CTO & Engineering Leader</title>
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <meta charset="utf-8" />
     <meta
       name="description"
-      content="Matheus Morett is CTO at Monest, writing about engineering leadership, scaling teams and building software that lasts."
+      content="Matheus Morett is CTO at Monest, writing about engineering leadership, scaling teams and building software that lasts. Maintainer of Bullpane and bullmq-fanout."
     />
 
     <!-- Open Graph meta tags (for LinkedIn, Facebook, etc.) -->
@@ -29,16 +28,78 @@
     <link rel="canonical" href="https://matheusmorett.com/" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Matheus Morett",
+      "url": "https://matheusmorett.com/",
+      "image": "https://matheusmorett.com/images/eu.jpeg",
+      "jobTitle": "CTO",
+      "worksFor": { "@type": "Organization", "name": "Monest" },
+      "sameAs": [
+        "https://github.com/madmorett",
+        "https://www.linkedin.com/in/matheusmorett/",
+        "https://dev.to/matheusmorett2",
+        "https://x.com/Morett_the_best",
+        "https://www.youtube.com/channel/UCbDnkQGDPvCEnXLMm5oFz5g",
+        "https://www.instagram.com/madmorett/",
+        "https://bullpane.com/"
+      ]
+    }
+    </script>
   </head>
   <body>
+    <!--
+      Conteúdo indexável. A cena 3D é um canvas — o crawler não vê nada dela.
+      Este <main> é o mesmo conteúdo do mundinho em HTML de verdade, visualmente
+      oculto (não display:none) e com links reais para as páginas canônicas.
+    -->
+    <main class="sr-only" id="seo-content">
+      <h1>Matheus Morett — CTO at Monest</h1>
+      <p>
+        Engineer since 2014, CTO at Monest. I grew an engineering org from 10 to 50+ people
+        with 6 tech leads, and I write about engineering leadership, scaling teams and why
+        organizations behave the way they do — mostly from getting it wrong first.
+      </p>
+
+      <section>
+        <h2>Articles</h2>
+        <ul>
+          <%= seoArticles %>
+        </ul>
+        <p><a href="/articles/">All articles</a></p>
+      </section>
+
+      <section>
+        <h2>Open Source</h2>
+        <ul>
+          <%= seoOpenSource %>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href="https://github.com/madmorett">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/matheusmorett/">LinkedIn</a></li>
+          <li><a href="https://dev.to/matheusmorett2">dev.to</a></li>
+          <li><a href="https://www.youtube.com/channel/UCbDnkQGDPvCEnXLMm5oFz5g">YouTube</a></li>
+          <li><a href="https://www.instagram.com/madmorett/">Instagram</a></li>
+        </ul>
+      </section>
+    </main>
+
     <div class="background">
-      <canvas class="webgl"></canvas>
+      <canvas class="webgl" aria-hidden="true"></canvas>
       <audio controls style="display: none" id="music">
         <source src="/sound/music.mp3" type="audio/ogg" />
       </audio>
       <div class="container">
         <div class="content">
           <a href="/articles/" id="open-tablet"> Articles </a>
+          <a href="/#/open-source" id="open-source-link"> Open Source </a>
           <a
             href="https://github.com/madmorett"
             target="_blank"

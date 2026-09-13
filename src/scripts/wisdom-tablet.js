@@ -5,21 +5,25 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { checkQuests } from "./gamification";
 import { gsap } from "gsap";
+import { setRoute } from "./router";
 
 /**
- * A Tábua da Sabedoria: uma estela de pedra fincada no planeta.
- * Clicar nela abre a lista de artigos; clicar num artigo abre o texto
+ * O Templo dos Artigos: um pequeno templo grego (degraus, colunas,
+ * entablamento, frontão) com a tábua de pedra guardada dentro.
+ * Clicar nele abre a lista de artigos; clicar num artigo abre o texto
  * completo num leitor dentro do próprio mundinho — nada de sair da cena.
  */
 
 // Injetado no build pelo webpack (DefinePlugin)
 const ARTICLES = typeof __ARTICLES__ !== "undefined" ? __ARTICLES__ : [];
 
-const STONE = 0xd8d0c2;
-const STONE_DARK = 0xb9ae9c;
+const MARBLE = 0xefe9dd;
+const MARBLE_DARK = 0xd3cbbd;
 const CARVE = 0x4a4238;
 
-let tabletGroup;
+const SCALE = 0.7;
+
+let templeGroup;
 let camera;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -27,100 +31,93 @@ let hovered = false;
 
 export function createWisdomTablet(planetGroup, cameraRef, planetRadius) {
   camera = cameraRef;
-  tabletGroup = new THREE.Group();
+  templeGroup = new THREE.Group();
 
-  // Estela: retângulo com frontão triangular no topo (telhado de templo).
-  // Topo em arco lê como lápide; o frontão é o que dá o ar grego.
-  const w = 0.75;
-  const straight = 1.6;
-  const pediment = 0.42;
-  const shape = new THREE.Shape();
-  shape.moveTo(-w, 0);
-  shape.lineTo(w, 0);
-  shape.lineTo(w, straight);
-  shape.lineTo(0, straight + pediment);
-  shape.lineTo(-w, straight);
-  shape.lineTo(-w, 0);
+  const marble = new THREE.MeshStandardMaterial({ color: MARBLE, roughness: 0.85 });
+  const marbleDark = new THREE.MeshStandardMaterial({ color: MARBLE_DARK, roughness: 0.9 });
+  const carve = new THREE.MeshStandardMaterial({ color: CARVE, roughness: 1 });
 
-  const depth = 0.18;
-  const slabGeometry = new THREE.ExtrudeGeometry(shape, {
-    depth,
-    bevelEnabled: true,
-    bevelThickness: 0.03,
-    bevelSize: 0.03,
-    bevelSegments: 3,
+  const add = (geometry, material, x, y, z) => {
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(x, y, z);
+    mesh.castShadow = true;
+    templeGroup.add(mesh);
+    return mesh;
+  };
+
+  // Base em três degraus
+  add(new THREE.BoxGeometry(2.6, 0.12, 1.3), marbleDark, 0, 0.06, 0);
+  add(new THREE.BoxGeometry(2.35, 0.12, 1.1), marble, 0, 0.18, 0);
+  add(new THREE.BoxGeometry(2.1, 0.12, 0.9), marble, 0, 0.3, 0);
+  const floor = 0.36;
+
+  // Quatro colunas na frente, com base e capitel
+  const columnHeight = 1.25;
+  const columnGeometry = new THREE.CylinderGeometry(0.085, 0.1, columnHeight, 18);
+  [-0.8, -0.27, 0.27, 0.8].forEach((x) => {
+    add(new THREE.BoxGeometry(0.24, 0.05, 0.24), marble, x, floor + 0.025, 0.3);
+    add(columnGeometry, marble, x, floor + columnHeight / 2, 0.3);
+    add(new THREE.BoxGeometry(0.26, 0.07, 0.26), marble, x, floor + columnHeight + 0.035, 0.3);
   });
-  const stoneMaterial = new THREE.MeshStandardMaterial({
-    color: STONE,
-    roughness: 0.95,
-    metalness: 0,
-  });
-  const slab = new THREE.Mesh(slabGeometry, stoneMaterial);
-  slab.castShadow = true;
-  slab.position.y = 0.22;
-  tabletGroup.add(slab);
 
-  // Pedestal
-  const plinth = new THREE.Mesh(
-    new THREE.BoxGeometry(2.1, 0.24, 0.75),
-    new THREE.MeshStandardMaterial({ color: STONE_DARK, roughness: 1 })
-  );
-  plinth.position.set(0, 0.12, depth / 2);
-  plinth.castShadow = true;
-  tabletGroup.add(plinth);
+  // Entablamento (a faixa onde vai o título) e frontão
+  const entablatureY = floor + columnHeight + 0.07 + 0.12;
+  add(new THREE.BoxGeometry(2.1, 0.24, 0.9), marble, 0, entablatureY, 0);
 
-  // Linhas "escritas" na pedra: uma por artigo, até caber
-  const carveMaterial = new THREE.MeshStandardMaterial({
-    color: CARVE,
-    roughness: 1,
+  const pediment = new THREE.Shape();
+  pediment.moveTo(-1.1, 0);
+  pediment.lineTo(1.1, 0);
+  pediment.lineTo(0, 0.5);
+  pediment.lineTo(-1.1, 0);
+  const pedimentGeometry = new THREE.ExtrudeGeometry(pediment, {
+    depth: 0.95,
+    bevelEnabled: false,
   });
-  const lineCount = Math.min(ARTICLES.length, 8);
-  const lineTop = 1.18;
-  const lineGap = 0.13;
+  add(pedimentGeometry, marble, 0, entablatureY + 0.12, -0.475);
+
+  // A tábua, guardada no fundo do templo, com as linhas "escritas"
+  add(new THREE.BoxGeometry(1.7, columnHeight, 0.1), marbleDark, 0, floor + columnHeight / 2, -0.3);
+  const lineCount = Math.min(ARTICLES.length, 7);
+  const lineTop = floor + columnHeight - 0.18;
   for (let i = 0; i < lineCount; i++) {
-    const width = i % 3 === 2 ? 0.75 : 1.1;
-    const line = new THREE.Mesh(
+    const width = i % 3 === 2 ? 0.7 : 1.05;
+    add(
       new THREE.BoxGeometry(width, 0.035, 0.012),
-      carveMaterial
+      carve,
+      (1.05 - width) / -2,
+      lineTop - i * 0.14,
+      -0.243
     );
-    line.position.set(
-      (1.1 - width) / -2,
-      lineTop - i * lineGap,
-      depth + 0.036
-    );
-    tabletGroup.add(line);
   }
 
-  // Título gravado abaixo do frontão
+  // Título gravado no entablamento
   const fontLoader = new FontLoader();
   fontLoader.load("/fonts/Comic Neue_Bold.json", (font) => {
     const geometry = new TextGeometry("ARTICLES", {
       font,
-      size: 0.17,
-      height: 0.015,
+      size: 0.13,
+      height: 0.012,
       curveSegments: 6,
     });
     geometry.center();
-    const title = new THREE.Mesh(geometry, carveMaterial);
-    title.position.set(0, 1.5, depth + 0.036);
-    tabletGroup.add(title);
+    add(geometry, carve, 0, entablatureY, 0.45 + 0.012);
   });
 
-  // Fincada na superfície, virada levemente para a câmera
-  const x = 0.7;
+  // Fincado na superfície, virado levemente para a câmera
+  const x = 1.0;
   const z = 4.3;
   const surfaceY =
     Math.sqrt(planetRadius * planetRadius - x * x - z * z) - planetRadius;
-  tabletGroup.position.set(x, surfaceY + 0.42, z);
-  tabletGroup.rotation.y = -0.12;
-  tabletGroup.scale.setScalar(0.8);
+  templeGroup.position.set(x, surfaceY + 0.42, z);
+  templeGroup.rotation.y = -0.15;
+  templeGroup.scale.setScalar(SCALE);
 
-  planetGroup.add(tabletGroup);
+  planetGroup.add(templeGroup);
 
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("click", onClick);
 
-  // O link "Articles" do rodapé abre a tábua em vez de navegar
+  // O link "Articles" do rodapé abre o templo em vez de navegar
   const footerLink = document.getElementById("open-tablet");
   if (footerLink) {
     footerLink.addEventListener("click", (event) => {
@@ -129,42 +126,42 @@ export function createWisdomTablet(planetGroup, cameraRef, planetRadius) {
     });
   }
 
-  return tabletGroup;
+  return templeGroup;
 }
 
-function intersectsTablet(event) {
+function intersectsTemple(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
-  return raycaster.intersectObject(tabletGroup, true).length > 0;
+  return raycaster.intersectObject(templeGroup, true).length > 0;
 }
 
 function onMouseMove(event) {
-  if (!tabletGroup) return;
+  if (!templeGroup) return;
   if (window.starModalIsOpened || window.aboutMeShown) return;
 
-  const over = intersectsTablet(event);
+  const over = intersectsTemple(event);
   if (over) document.body.style.cursor = "pointer";
 
   if (over && !hovered) {
     hovered = true;
-    gsap.to(tabletGroup.scale, { x: 0.84, y: 0.84, z: 0.84, duration: 0.3 });
+    gsap.to(templeGroup.scale, { x: SCALE * 1.05, y: SCALE * 1.05, z: SCALE * 1.05, duration: 0.3 });
   } else if (!over && hovered) {
     hovered = false;
-    gsap.to(tabletGroup.scale, { x: 0.8, y: 0.8, z: 0.8, duration: 0.3 });
+    gsap.to(templeGroup.scale, { x: SCALE, y: SCALE, z: SCALE, duration: 0.3 });
   }
 }
 
 function onClick(event) {
-  if (!tabletGroup) return;
+  if (!templeGroup) return;
   if (window.starModalIsOpened || window.aboutMeShown) return;
-  if (intersectsTablet(event)) openTablet();
+  if (intersectsTemple(event)) openTablet();
 }
 
 /**
- * Modal: lista de artigos
+ * Modal: lista de artigos (e, opcionalmente, já abre um artigo)
  */
-function openTablet() {
+export function openTablet(slug) {
   const existing = document.getElementById("tabletModal");
   if (existing) existing.remove();
 
@@ -180,6 +177,7 @@ function openTablet() {
     window.starModalIsOpened = false;
     window.questTracker.tablet = true;
     checkQuests();
+    setRoute(null);
   };
 
   const panel = document.createElement("div");
@@ -187,18 +185,23 @@ function openTablet() {
   modal.appendChild(closeButton);
   modal.appendChild(panel);
 
-  renderList(panel);
-
   modal.style.display = "flex";
   window.starModalIsOpened = true;
   document.body.appendChild(modal);
+
+  if (slug && ARTICLES.some((a) => a.slug === slug)) {
+    openArticle(panel, slug);
+  } else {
+    renderList(panel);
+  }
 }
 
 function renderList(panel) {
   panel.parentElement.scrollTop = 0; // quem rola é o modal
+  setRoute("/articles");
   panel.innerHTML = `
     <header class="tablet__header">
-      <span class="tablet__eyebrow">Σ · The Tablet of Wisdom</span>
+      <span class="tablet__eyebrow">Σ · The Temple of Articles</span>
       <h1>Articles</h1>
       <p>Lessons carved from scaling an engineering org — mostly from getting it wrong first.</p>
     </header>
@@ -236,6 +239,7 @@ async function fetchArticle(slug) {
 
 async function openArticle(panel, slug) {
   panel.innerHTML = `<p class="tablet__loading">Carving…</p>`;
+  setRoute(`/articles/${slug}`);
 
   let article;
   try {
@@ -247,7 +251,7 @@ async function openArticle(panel, slug) {
 
   panel.parentElement.scrollTop = 0; // quem rola é o modal
   panel.innerHTML = `
-    <button class="tablet__back">&larr; Back to the tablet</button>
+    <button class="tablet__back">&larr; Back to the temple</button>
     <header class="tablet__header">
       <span class="tablet__date">${article.date}</span>
       <h1>${article.title}</h1>
@@ -260,12 +264,15 @@ async function openArticle(panel, slug) {
       }
     </header>
     <article class="tablet__content">${article.htmlContent}</article>
-    ${
-      article.originalUrl
-        ? `<p class="tablet__original"><a href="${article.originalUrl}" target="_blank" rel="noreferrer">Originally published on dev.to &rarr;</a></p>`
-        : ""
-    }
-    <button class="tablet__back tablet__back--bottom">&larr; Back to the tablet</button>
+    <p class="tablet__original">
+      <a href="/articles/${slug}/">Permalink</a>
+      ${
+        article.originalUrl
+          ? ` · <a href="${article.originalUrl}" target="_blank" rel="noreferrer">Originally published on dev.to &rarr;</a>`
+          : ""
+      }
+    </p>
+    <button class="tablet__back tablet__back--bottom">&larr; Back to the temple</button>
   `;
 
   panel.querySelectorAll(".tablet__back").forEach((button) => {

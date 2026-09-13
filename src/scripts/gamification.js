@@ -8,9 +8,10 @@ window.questTracker = {
   star2: false,
   star3: false,
   tablet: false,
+  bull: false,
 };
 
-window.totalQuests = 6
+window.totalQuests = 7
 
 if (window.alreadyShowConfetti === undefined) {
   window.alreadyShowConfetti = false
@@ -100,7 +101,7 @@ export function checkQuests() {
 function createCompletionTracker() {
   const tracker = document.createElement("div");
   tracker.id = "completionTracker";
-  tracker.innerHTML = "0/6 hidden quests completed"; // Initial state
+  tracker.innerHTML = "0/7 hidden quests completed"; // Initial state
   document.body.appendChild(tracker);
   return tracker;
 }

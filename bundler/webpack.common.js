@@ -5,9 +5,11 @@ const webpack = require('webpack')
 const { RawSource } = require('webpack-sources')
 const path = require('path')
 const { getArticles } = require('./build-articles')
+const fs = require('fs')
 
 const siteUrl = 'https://matheusmorett.com'
 const articles = getArticles()
+const openSource = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../content/open-source.json'), 'utf-8'))
 
 // Generate sitemap.xml
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -43,6 +45,14 @@ const tabletArticles = articles.map(({ title, date, description, tags, slug }) =
     title, date, description, tags, slug
 }))
 
+// HTML indexável injetado no <main class="sr-only"> da home
+const seoArticles = articles.map(a =>
+    `<li><a href="/articles/${a.slug}/">${a.title}</a> <time datetime="${a.rawDate}">${a.date}</time> — ${a.description}</li>`
+).join('\n')
+const seoOpenSource = openSource.map(p =>
+    `<li><strong>${p.name}</strong> — ${p.tagline} ${p.description} ${p.links.map(l => `<a href="${l.url}">${l.label}</a>`).join(' · ')}</li>`
+).join('\n')
+
 const articleJsonAssets = articles.map(a => ({
     filename: `articles/${a.slug}.json`,
     source: JSON.stringify({
@@ -73,14 +83,16 @@ module.exports = {
         }),
         // Injeta os artigos na cena 3D
         new webpack.DefinePlugin({
-            __ARTICLES__: JSON.stringify(tabletArticles)
+            __ARTICLES__: JSON.stringify(tabletArticles),
+            __OPEN_SOURCE__: JSON.stringify(openSource)
         }),
         // Homepage
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../src/index.html'),
             filename: 'index.html',
             chunks: ['main'],
-            minify: true
+            minify: true,
+            templateParameters: { seoArticles, seoOpenSource }
         }),
         // Blog listing
         blogListPlugin,
@@ -112,7 +124,8 @@ module.exports = {
             {
                 test: /\.(html)$/,
                 exclude: [
-                    path.resolve(__dirname, '../src/blog')
+                    path.resolve(__dirname, '../src/blog'),
+                    path.resolve(__dirname, '../src/index.html')
                 ],
                 use:
                 [

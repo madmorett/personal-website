@@ -34,6 +34,21 @@
     <% } %>
 
     <link rel="canonical" href="<%= siteUrl %>/articles/<%= article.slug %>/" />
+
+    <script type="application/ld+json">
+    <%= JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": article.title,
+      "description": article.description,
+      "datePublished": article.rawDate,
+      "image": article.image || (siteUrl + "/images/eu.jpeg"),
+      "url": siteUrl + "/articles/" + article.slug + "/",
+      "mainEntityOfPage": siteUrl + "/articles/" + article.slug + "/",
+      "author": { "@type": "Person", "name": "Matheus Morett", "url": siteUrl + "/" },
+      "keywords": (article.tags || []).join(", ")
+    }) %>
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -47,9 +62,9 @@
       <div class="nav__inner">
         <a href="/" class="nav__logo">Matheus Morett</a>
         <div class="nav__links">
-          <a href="/#about" class="nav__link">About</a>
-          <a href="/#writing" class="nav__link">Writing</a>
-          <a href="/#contact" class="nav__link">Contact</a>
+          <a href="/" class="nav__link">Home</a>
+          <a href="/articles/" class="nav__link">Articles</a>
+          <a href="/#/open-source" class="nav__link">Open Source</a>
         </div>
       </div>
     </nav>
@@ -78,6 +93,9 @@
         <a href="<%= article.originalUrl %>" target="_blank" rel="noreferrer">Originally published on Dev.to &rarr;</a>
       </div>
       <% } %>
+      <div class="article__original">
+        <a href="/#/articles/<%= article.slug %>">Read it on the planet &rarr;</a>
+      </div>
     </article>
 
     <!-- Footer -->

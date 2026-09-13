@@ -10,7 +10,9 @@ import { createRocket, updateRocketParticles } from "./scripts/rocket";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { GUI } from "lil-gui";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-import { createWisdomTablet } from "./scripts/wisdom-tablet";
+import { createBullStatue, openOpenSource } from "./scripts/open-source";
+import { createWisdomTablet, openTablet } from "./scripts/wisdom-tablet";
+import { initRouter } from "./scripts/router";
 import { initStars } from "./scripts/interactive-stars";
 import { isMobile } from "./utils";
 import { updateParallax } from "./scripts/parallax";
@@ -243,6 +245,12 @@ initStars(scene, camera, renderer);
 // A Tábua da Sabedoria (lista + leitor de artigos). Depois de initStars
 // porque o listener de mousemove das estrelas reseta o cursor.
 createWisdomTablet(planetGroup, camera, platRadius);
+
+// O Touro de Bronze (projetos open source)
+createBullStatue(planetGroup, camera, platRadius);
+
+// Deep links: /#/articles/<slug> e /#/open-source abrem direto na cena
+initRouter({ articles: openTablet, openSource: openOpenSource });
 
 /**
  * Tamanho
