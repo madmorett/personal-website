@@ -9,7 +9,7 @@ const fs = require('fs')
 
 const siteUrl = 'https://matheusmorett.com'
 const articles = getArticles()
-const openSource = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../content/open-source.json'), 'utf-8'))
+const projects = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../content/projects.json'), 'utf-8'))
 
 // Generate sitemap.xml
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -49,7 +49,7 @@ const tabletArticles = articles.map(({ title, date, description, tags, slug }) =
 const seoArticles = articles.map(a =>
     `<li><a href="/articles/${a.slug}/">${a.title}</a> <time datetime="${a.rawDate}">${a.date}</time> — ${a.description}</li>`
 ).join('\n')
-const seoOpenSource = openSource.map(p =>
+const seoProjects = projects.map(p =>
     `<li><strong>${p.name}</strong> — ${p.tagline} ${p.description} ${p.links.map(l => `<a href="${l.url}">${l.label}</a>`).join(' · ')}</li>`
 ).join('\n')
 
@@ -84,7 +84,7 @@ module.exports = {
         // Injeta os artigos na cena 3D
         new webpack.DefinePlugin({
             __ARTICLES__: JSON.stringify(tabletArticles),
-            __OPEN_SOURCE__: JSON.stringify(openSource)
+            __PROJECTS__: JSON.stringify(projects)
         }),
         // Homepage
         new HtmlWebpackPlugin({
@@ -92,7 +92,7 @@ module.exports = {
             filename: 'index.html',
             chunks: ['main'],
             minify: true,
-            templateParameters: { seoArticles, seoOpenSource }
+            templateParameters: { seoArticles, seoProjects }
         }),
         // Blog listing
         blogListPlugin,

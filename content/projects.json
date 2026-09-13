@@ -10,6 +10,16 @@
     ]
   },
   {
+    "name": "bullmq-outbox",
+    "tagline": "Outbox fallback for BullMQ.",
+    "description": "When Redis is out of memory or unreachable, jobs land in a store you own instead of disappearing. Works with BullMQ v5, v6 and Pro.",
+    "tags": ["bullmq", "outbox-pattern", "reliability", "redis", "typescript"],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/madmorett/bullmq-outbox" },
+      { "label": "npm", "url": "https://www.npmjs.com/package/bullmq-outbox" }
+    ]
+  },
+  {
     "name": "bullmq-fanout",
     "tagline": "Turn BullMQ into a message bus.",
     "description": "Publish one domain event to many queues, each with its own worker, retries and failure domain. Works with BullMQ v5, v6 and Pro.",

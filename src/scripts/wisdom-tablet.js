@@ -8,20 +8,20 @@ import { gsap } from "gsap";
 import { setRoute } from "./router";
 
 /**
- * O Templo dos Artigos: um pequeno templo grego (degraus, colunas,
- * entablamento, frontão) com a tábua de pedra guardada dentro.
- * Clicar nele abre a lista de artigos; clicar num artigo abre o texto
+ * A Tábua da Sabedoria: uma estela de pedra pequena, fincada no planeta.
+ * Clicar nela abre a lista de artigos; clicar num artigo abre o texto
  * completo num leitor dentro do próprio mundinho — nada de sair da cena.
  */
 
 // Injetado no build pelo webpack (DefinePlugin)
 const ARTICLES = typeof __ARTICLES__ !== "undefined" ? __ARTICLES__ : [];
 
-const MARBLE = 0xefe9dd;
-const MARBLE_DARK = 0xd3cbbd;
+const STONE = 0xd8d0c2;
+const STONE_DARK = 0xb9ae9c;
 const CARVE = 0x4a4238;
 
-const SCALE = 0.7;
+// Pequena de propósito: é um detalhe do planeta, não o centro dele
+const SCALE = 0.55;
 
 let templeGroup;
 let camera;
@@ -33,83 +33,75 @@ export function createWisdomTablet(planetGroup, cameraRef, planetRadius) {
   camera = cameraRef;
   templeGroup = new THREE.Group();
 
-  const marble = new THREE.MeshStandardMaterial({ color: MARBLE, roughness: 0.85 });
-  const marbleDark = new THREE.MeshStandardMaterial({ color: MARBLE_DARK, roughness: 0.9 });
-  const carve = new THREE.MeshStandardMaterial({ color: CARVE, roughness: 1 });
+  // Estela: retângulo com frontão triangular no topo
+  const w = 0.75;
+  const straight = 1.6;
+  const pediment = 0.42;
+  const shape = new THREE.Shape();
+  shape.moveTo(-w, 0);
+  shape.lineTo(w, 0);
+  shape.lineTo(w, straight);
+  shape.lineTo(0, straight + pediment);
+  shape.lineTo(-w, straight);
+  shape.lineTo(-w, 0);
 
-  const add = (geometry, material, x, y, z) => {
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x, y, z);
-    mesh.castShadow = true;
-    templeGroup.add(mesh);
-    return mesh;
-  };
-
-  // Base em três degraus
-  add(new THREE.BoxGeometry(2.6, 0.12, 1.3), marbleDark, 0, 0.06, 0);
-  add(new THREE.BoxGeometry(2.35, 0.12, 1.1), marble, 0, 0.18, 0);
-  add(new THREE.BoxGeometry(2.1, 0.12, 0.9), marble, 0, 0.3, 0);
-  const floor = 0.36;
-
-  // Quatro colunas na frente, com base e capitel
-  const columnHeight = 1.25;
-  const columnGeometry = new THREE.CylinderGeometry(0.085, 0.1, columnHeight, 18);
-  [-0.8, -0.27, 0.27, 0.8].forEach((x) => {
-    add(new THREE.BoxGeometry(0.24, 0.05, 0.24), marble, x, floor + 0.025, 0.3);
-    add(columnGeometry, marble, x, floor + columnHeight / 2, 0.3);
-    add(new THREE.BoxGeometry(0.26, 0.07, 0.26), marble, x, floor + columnHeight + 0.035, 0.3);
+  const depth = 0.18;
+  const slabGeometry = new THREE.ExtrudeGeometry(shape, {
+    depth,
+    bevelEnabled: true,
+    bevelThickness: 0.03,
+    bevelSize: 0.03,
+    bevelSegments: 3,
   });
+  const slab = new THREE.Mesh(
+    slabGeometry,
+    new THREE.MeshStandardMaterial({ color: STONE, roughness: 0.95 })
+  );
+  slab.castShadow = true;
+  slab.position.y = 0.22;
+  templeGroup.add(slab);
 
-  // Entablamento (a faixa onde vai o título) e frontão
-  const entablatureY = floor + columnHeight + 0.07 + 0.12;
-  add(new THREE.BoxGeometry(2.1, 0.24, 0.9), marble, 0, entablatureY, 0);
+  // Pedestal
+  const plinth = new THREE.Mesh(
+    new THREE.BoxGeometry(2.1, 0.24, 0.75),
+    new THREE.MeshStandardMaterial({ color: STONE_DARK, roughness: 1 })
+  );
+  plinth.position.set(0, 0.12, depth / 2);
+  plinth.castShadow = true;
+  templeGroup.add(plinth);
 
-  const pediment = new THREE.Shape();
-  pediment.moveTo(-1.1, 0);
-  pediment.lineTo(1.1, 0);
-  pediment.lineTo(0, 0.5);
-  pediment.lineTo(-1.1, 0);
-  const pedimentGeometry = new THREE.ExtrudeGeometry(pediment, {
-    depth: 0.95,
-    bevelEnabled: false,
-  });
-  add(pedimentGeometry, marble, 0, entablatureY + 0.12, -0.475);
-
-  // A tábua, guardada no fundo do templo, com as linhas "escritas"
-  add(new THREE.BoxGeometry(1.7, columnHeight, 0.1), marbleDark, 0, floor + columnHeight / 2, -0.3);
-  const lineCount = Math.min(ARTICLES.length, 7);
-  const lineTop = floor + columnHeight - 0.18;
+  // Linhas "escritas" na pedra: uma por artigo, até caber
+  const carveMaterial = new THREE.MeshStandardMaterial({ color: CARVE, roughness: 1 });
+  const lineCount = Math.min(ARTICLES.length, 8);
   for (let i = 0; i < lineCount; i++) {
-    const width = i % 3 === 2 ? 0.7 : 1.05;
-    add(
-      new THREE.BoxGeometry(width, 0.035, 0.012),
-      carve,
-      (1.05 - width) / -2,
-      lineTop - i * 0.14,
-      -0.243
-    );
+    const width = i % 3 === 2 ? 0.75 : 1.1;
+    const line = new THREE.Mesh(new THREE.BoxGeometry(width, 0.035, 0.012), carveMaterial);
+    line.position.set((1.1 - width) / -2, 1.18 - i * 0.13, depth + 0.036);
+    templeGroup.add(line);
   }
 
-  // Título gravado no entablamento
+  // Título gravado abaixo do frontão
   const fontLoader = new FontLoader();
   fontLoader.load("/fonts/Comic Neue_Bold.json", (font) => {
     const geometry = new TextGeometry("ARTICLES", {
       font,
-      size: 0.13,
-      height: 0.012,
+      size: 0.17,
+      height: 0.015,
       curveSegments: 6,
     });
     geometry.center();
-    add(geometry, carve, 0, entablatureY, 0.45 + 0.012);
+    const title = new THREE.Mesh(geometry, carveMaterial);
+    title.position.set(0, 1.5, depth + 0.036);
+    templeGroup.add(title);
   });
 
-  // Fincado na superfície, virado levemente para a câmera
-  const x = 1.0;
-  const z = 4.3;
+  // Fincada na superfície, à esquerda do texto, virada levemente para a câmera
+  const x = -1.6;
+  const z = 5.0;
   const surfaceY =
     Math.sqrt(planetRadius * planetRadius - x * x - z * z) - planetRadius;
   templeGroup.position.set(x, surfaceY + 0.42, z);
-  templeGroup.rotation.y = -0.15;
+  templeGroup.rotation.y = 0.12;
   templeGroup.scale.setScalar(SCALE);
 
   planetGroup.add(templeGroup);

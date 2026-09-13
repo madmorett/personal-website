@@ -8,7 +8,7 @@ window.questTracker = {
   star2: false,
   star3: false,
   tablet: false,
-  bull: false,
+  projects: false,
 };
 
 window.totalQuests = 7

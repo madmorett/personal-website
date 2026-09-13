@@ -32,7 +32,7 @@ export function createAboutMePanel() {
     My roots are TypeScript, React, and Node. I still care deeply about scalable, testable,
     maintainable software: solutions that work today and still stand years from now.
     <br><br>
-    The little temple on this planet holds my articles; the bronze bull, my open source work. Click them.
+    The stone tablet on this planet holds my articles; the signpost, the projects I maintain. Click them.
   `;
 
 
