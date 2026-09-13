@@ -536,3 +536,178 @@ a:hover {
   max-width: none;
   padding: 0;
 }
+
+/* ---------- A dimensão de leitura ---------- */
+
+.modal--reader {
+  background-color: #0b0b11;
+  color: #e8e2d6;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.modal--reader.is-visible {
+  opacity: 1;
+}
+
+/* Céu: duas camadas de estrelas bem fracas, à deriva, e uma vinheta */
+.reader-sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%),
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 37% 71%, rgba(255, 255, 255, 0.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 63% 33%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 84% 62%, rgba(255, 255, 255, 0.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 88%, rgba(255, 255, 255, 0.35) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 91% 12%, rgba(255, 255, 255, 0.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 48% 9%, rgba(255, 255, 255, 0.3) 50%, transparent 51%),
+    radial-gradient(1px 1px at 71% 83%, rgba(255, 255, 255, 0.45) 50%, transparent 51%);
+  background-size:
+    100% 100%,
+    900px 900px, 900px 900px, 900px 900px, 900px 900px,
+    700px 700px, 700px 700px, 700px 700px, 700px 700px;
+  animation: reader-drift 180s linear infinite;
+}
+
+@keyframes reader-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 0 0, 900px 300px, 900px 300px, 900px 300px, 900px 300px, -700px 200px, -700px 200px, -700px 200px, -700px 200px; }
+}
+
+.reader-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #80eebd, #e85bbf);
+  z-index: 3;
+  transition: width 0.1s linear;
+}
+
+.reader-exit {
+  position: fixed;
+  top: 22px;
+  left: 28px;
+  z-index: 3;
+  background: rgba(11, 11, 17, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(232, 226, 214, 0.25);
+  border-radius: 999px;
+  color: #e8e2d6;
+  font-family: 'Comic Neue', cursive;
+  font-size: 14px;
+  padding: 8px 16px;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.reader-exit:hover {
+  opacity: 1;
+  border-color: rgba(232, 226, 214, 0.6);
+}
+
+.modal--reader .close-btn {
+  z-index: 3;
+}
+
+/* Tipografia de leitura: serifada desenhada para tela, coluna estreita, entrelinha folgada */
+.modal--reader .tablet {
+  position: relative;
+  z-index: 1;
+  font-family: 'Literata', Georgia, 'Times New Roman', serif;
+  font-size: 19px;
+  line-height: 1.75;
+  max-width: 680px;
+  color: #e8e2d6;
+  margin-top: 96px;
+}
+
+.modal--reader .tablet h1,
+.modal--reader .tablet h2,
+.modal--reader .tablet h3,
+.modal--reader .tablet__title,
+.modal--reader .oss__name {
+  font-family: 'Literata', Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+.modal--reader .tablet__header h1 {
+  font-size: 38px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.modal--reader .tablet__eyebrow {
+  font-family: 'Comic Neue', cursive;
+}
+
+.modal--reader .tablet__content h2 {
+  font-size: 27px;
+  margin-top: 48px;
+}
+
+.modal--reader .tablet__content h3 {
+  font-size: 21px;
+}
+
+.modal--reader .tablet__content p {
+  margin-bottom: 22px;
+}
+
+.modal--reader .tablet__content blockquote {
+  font-style: italic;
+  font-size: 18px;
+}
+
+.modal--reader .tablet__content code {
+  font-size: 0.82em;
+}
+
+.modal--reader .tablet__desc,
+.modal--reader .oss__desc {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.modal--reader .tablet__date,
+.modal--reader .tablet__tags span,
+.modal--reader .tablet__back,
+.modal--reader .copy-code-btn {
+  font-family: 'Comic Neue', cursive;
+}
+
+.modal--reader .tablet a {
+  color: #9fe3c3;
+  text-decoration: underline;
+  text-decoration-color: rgba(159, 227, 195, 0.35);
+  text-underline-offset: 3px;
+}
+
+.modal--reader .tablet a:hover {
+  text-decoration-color: #9fe3c3;
+}
+
+@media only screen and (max-width: 600px) {
+  .modal--reader .tablet {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-top: 84px;
+  }
+
+  .modal--reader .tablet__header h1 {
+    font-size: 30px;
+  }
+
+  .reader-exit {
+    top: 18px;
+    left: 16px;
+    font-size: 13px;
+    padding: 7px 12px;
+  }
+}

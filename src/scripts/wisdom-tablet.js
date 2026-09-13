@@ -6,6 +6,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { checkQuests } from "./gamification";
 import { gsap } from "gsap";
 import { setRoute } from "./router";
+import { openReader, closeReader } from "./reading-mode";
 
 /**
  * A Tábua da Sabedoria: uma estela de pedra pequena, fincada no planeta.
@@ -165,10 +166,10 @@ export function openTablet(slug) {
   closeButton.classList.add("close-btn");
   closeButton.innerHTML = `<i class="fas fa-times"></i>`;
   closeButton.onclick = () => {
-    modal.remove();
-    window.starModalIsOpened = false;
-    window.questTracker.tablet = true;
-    checkQuests();
+    closeReader(modal, () => {
+      window.questTracker.tablet = true;
+      checkQuests();
+    });
     setRoute(null);
   };
 
@@ -177,9 +178,7 @@ export function openTablet(slug) {
   modal.appendChild(closeButton);
   modal.appendChild(panel);
 
-  modal.style.display = "flex";
-  window.starModalIsOpened = true;
-  document.body.appendChild(modal);
+  openReader(modal);
 
   if (slug && ARTICLES.some((a) => a.slug === slug)) {
     openArticle(panel, slug);
@@ -193,7 +192,7 @@ function renderList(panel) {
   setRoute("/articles");
   panel.innerHTML = `
     <header class="tablet__header">
-      <span class="tablet__eyebrow">Σ · The Temple of Articles</span>
+      <span class="tablet__eyebrow">Σ · The Tablet of Wisdom</span>
       <h1>Articles</h1>
       <p>Lessons carved from scaling an engineering org — mostly from getting it wrong first.</p>
     </header>
@@ -243,7 +242,7 @@ async function openArticle(panel, slug) {
 
   panel.parentElement.scrollTop = 0; // quem rola é o modal
   panel.innerHTML = `
-    <button class="tablet__back">&larr; Back to the temple</button>
+    <button class="tablet__back">&larr; Back to the tablet</button>
     <header class="tablet__header">
       <span class="tablet__date">${article.date}</span>
       <h1>${article.title}</h1>
@@ -264,7 +263,7 @@ async function openArticle(panel, slug) {
           : ""
       }
     </p>
-    <button class="tablet__back tablet__back--bottom">&larr; Back to the temple</button>
+    <button class="tablet__back tablet__back--bottom">&larr; Back to the tablet</button>
   `;
 
   panel.querySelectorAll(".tablet__back").forEach((button) => {

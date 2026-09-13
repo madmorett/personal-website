@@ -109,6 +109,9 @@ function createCompletionTracker() {
 function updateCompletionTracker() {
   const tracker = document.getElementById("completionTracker");
 
+  // No mobile o tracker não é criado — nada a atualizar
+  if (!tracker) return;
+
   // Update the text
   tracker.innerHTML = `${window.completedQuests}/${totalQuests} hidden quests completed`;
 

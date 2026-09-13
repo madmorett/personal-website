@@ -5,6 +5,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { checkQuests } from "./gamification";
 import { gsap } from "gsap";
 import { setRoute } from "./router";
+import { openReader, closeReader } from "./reading-mode";
 
 /**
  * A placa de projetos: um poste de madeira com duas tabuletas, discreto,
@@ -135,10 +136,10 @@ export function openProjects() {
   closeButton.classList.add("close-btn");
   closeButton.innerHTML = `<i class="fas fa-times"></i>`;
   closeButton.onclick = () => {
-    modal.remove();
-    window.starModalIsOpened = false;
-    window.questTracker.projects = true;
-    checkQuests();
+    closeReader(modal, () => {
+      window.questTracker.projects = true;
+      checkQuests();
+    });
     setRoute(null);
   };
 
@@ -173,8 +174,6 @@ export function openProjects() {
 
   modal.appendChild(closeButton);
   modal.appendChild(panel);
-  modal.style.display = "flex";
-  window.starModalIsOpened = true;
-  document.body.appendChild(modal);
+  openReader(modal);
   setRoute("/projects");
 }

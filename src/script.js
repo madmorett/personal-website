@@ -13,6 +13,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { createSignpost, openProjects } from "./scripts/projects";
 import { createWisdomTablet, openTablet } from "./scripts/wisdom-tablet";
 import { initRouter } from "./scripts/router";
+import { initReadingMode } from "./scripts/reading-mode";
 import { initStars } from "./scripts/interactive-stars";
 import { isMobile } from "./utils";
 import { updateParallax } from "./scripts/parallax";
@@ -212,6 +213,7 @@ camera.position.y = isMobile ? 14.5 : 6.5;
 camera.position.z = isMobile ? 30 : 12;
 camera.rotation.x = -Math.PI / 7;
 planetGroup.add(camera); // A câmera agora segue a rotação do planeta
+initReadingMode(camera);
 
 const cameraFolder = gui.addFolder("Camera Controls");
 cameraFolder.add(camera.position, "x", -50, 50).name("Position X");
@@ -404,8 +406,8 @@ const tick = () => {
 
   updateRocketParticles(); // Atualiza a posição das partículas de fogo do foguete
 
-  // Render
-  renderer.render(scene, camera);
+  // Render (pausado enquanto o usuário está na dimensão de leitura)
+  if (!window.readingMode) renderer.render(scene, camera);
 
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
