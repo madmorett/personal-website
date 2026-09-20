@@ -41,8 +41,8 @@ const blogListPlugin = new HtmlWebpackPlugin({
 
 // Dados leves dos artigos injetados na cena 3D (lista da Tábua da Sabedoria).
 // O texto completo vai em articles/<slug>.json e é buscado sob demanda.
-const tabletArticles = articles.map(({ title, date, description, tags, slug }) => ({
-    title, date, description, tags, slug
+const tabletArticles = articles.map(({ title, date, description, tags, slug, readingMinutes }) => ({
+    title, date, description, tags, slug, readingMinutes
 }))
 
 // HTML indexável injetado no <main class="sr-only"> da home
@@ -57,7 +57,8 @@ const articleJsonAssets = articles.map(a => ({
     filename: `articles/${a.slug}.json`,
     source: JSON.stringify({
         title: a.title, date: a.date, description: a.description, tags: a.tags,
-        slug: a.slug, originalUrl: a.originalUrl, htmlContent: a.htmlContent
+        slug: a.slug, originalUrl: a.originalUrl, htmlContent: a.htmlContent,
+        readingMinutes: a.readingMinutes
     })
 }))
 

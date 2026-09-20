@@ -201,7 +201,7 @@ function renderList(panel) {
         (a) => `
         <li>
           <button class="tablet__item" data-slug="${a.slug}">
-            <span class="tablet__date">${a.date}</span>
+            <span class="tablet__date">${a.date} · ${a.readingMinutes} min read</span>
             <span class="tablet__title">${a.title}</span>
             <span class="tablet__desc">${a.description}</span>
           </button>
@@ -244,7 +244,7 @@ async function openArticle(panel, slug) {
   panel.innerHTML = `
     <button class="tablet__back">&larr; Back to the tablet</button>
     <header class="tablet__header">
-      <span class="tablet__date">${article.date}</span>
+      <span class="tablet__date">${article.date} · ${article.readingMinutes} min read</span>
       <h1>${article.title}</h1>
       ${
         article.tags && article.tags.length

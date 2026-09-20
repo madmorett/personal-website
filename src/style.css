@@ -711,3 +711,128 @@ a:hover {
     padding: 7px 12px;
   }
 }
+
+/* ---------- Revisão da UX de leitura: coluna mais larga, código com respiro ---------- */
+
+.modal--reader .tablet {
+  max-width: 824px; /* 760 de texto + padding */
+  box-sizing: border-box;
+  font-size: 19px;
+  line-height: 1.7;
+  padding: 0 32px;
+}
+
+.modal--reader .tablet__header {
+  padding-bottom: 24px;
+  margin-bottom: 36px;
+}
+
+.modal--reader .tablet__header h1 {
+  font-size: 42px;
+  margin-bottom: 14px;
+}
+
+.modal--reader .tablet__content h2 {
+  font-size: 29px;
+  margin: 56px 0 14px;
+}
+
+.modal--reader .tablet__content h3 {
+  margin-top: 36px;
+}
+
+.modal--reader .tablet__content p,
+.modal--reader .tablet__content ul,
+.modal--reader .tablet__content ol {
+  margin-bottom: 24px;
+}
+
+.modal--reader .tablet__content li {
+  margin-bottom: 8px;
+}
+
+/* Código: sangra 24px para fora da coluna, fonte um pouco maior, sem quebrar palavra */
+.modal--reader .tablet__content pre {
+  margin: 8px -24px 28px;
+  border: 1px solid rgba(232, 226, 214, 0.08);
+  border-radius: 12px;
+  background-color: #0d1117;
+}
+
+.modal--reader .tablet__content pre code {
+  padding: 22px 26px;
+  font-size: 15px;
+  line-height: 1.6;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  tab-size: 2;
+}
+
+.modal--reader .tablet__content code {
+  font-size: 0.85em;
+  padding: 2px 7px;
+  background-color: rgba(232, 226, 214, 0.1);
+  color: #f0eadf;
+}
+
+.modal--reader .tablet__content pre code {
+  background-color: transparent;
+  color: inherit;
+}
+
+.modal--reader .tablet__content blockquote {
+  font-size: 19px;
+  padding: 16px 24px;
+  margin: 8px 0 28px;
+  border-left-width: 4px;
+  border-left-color: #9fe3c3;
+}
+
+.modal--reader .tablet__content img {
+  margin: 12px -24px 28px;
+  max-width: calc(100% + 48px);
+  border-radius: 12px;
+}
+
+.modal--reader .tablet__content hr {
+  margin: 44px auto;
+  width: 120px;
+}
+
+.modal--reader .tablet__content strong {
+  color: #f5f0e6;
+}
+
+.modal--reader .tablet__original {
+  margin-top: 48px;
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 600px) {
+  .modal--reader .tablet {
+    padding: 0 20px;
+    font-size: 17.5px;
+  }
+
+  .modal--reader .tablet__header h1 {
+    font-size: 31px;
+  }
+
+  .modal--reader .tablet__content pre,
+  .modal--reader .tablet__content img {
+    margin-left: -12px;
+    margin-right: -12px;
+    max-width: calc(100% + 24px);
+  }
+
+  .modal--reader .tablet__content pre code {
+    padding: 16px 16px;
+    font-size: 13.5px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* No celular o botão Copy cobriria a 1ª linha: abre espaço em cima */
+  .modal--reader .tablet__content pre code {
+    padding-top: 44px;
+  }
+}

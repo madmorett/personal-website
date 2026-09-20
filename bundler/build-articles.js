@@ -4,11 +4,22 @@ const matter = require("gray-matter");
 const fs = require("fs");
 const path = require("path");
 
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 marked.use({
   renderer: {
-    code(token) {
-      const lang = token.lang || "";
-      const code = token.text || "";
+    // marked <13 passa (code, infostring); marked >=13 passa um token.
+    // Aceitar os dois evita que um upgrade volte a esvaziar todos os blocos.
+    code(codeOrToken, infostring) {
+      const isToken = typeof codeOrToken === "object" && codeOrToken !== null;
+      const code = (isToken ? codeOrToken.text : codeOrToken) || "";
+      const lang = ((isToken ? codeOrToken.lang : infostring) || "").trim().split(/\s+/)[0];
+
       if (lang && hljs.getLanguage(lang)) {
         const highlighted = hljs.highlight(code, { language: lang }).value;
         return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
@@ -16,8 +27,8 @@ marked.use({
       if (!code) {
         return `<pre><code class="hljs"></code></pre>`;
       }
-      const highlighted = hljs.highlightAuto(code).value;
-      return `<pre><code class="hljs">${highlighted}</code></pre>`;
+      // Sem linguagem: não adivinhar (highlightAuto erra feio em texto/CLI); só escapar.
+      return `<pre><code class="hljs">${escapeHtml(code)}</code></pre>`;
     },
   },
 });
@@ -42,6 +53,8 @@ function getArticles() {
     const { data, content } = matter(raw);
     const slug = data.slug || file.replace(".md", "");
     const htmlContent = marked(content);
+    const words = htmlContent.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+    const readingMinutes = Math.max(1, Math.round(words / 220));
 
     return {
       title: data.title || "Untitled",
@@ -53,6 +66,7 @@ function getArticles() {
       originalUrl: data.originalUrl || "",
       slug,
       htmlContent,
+      readingMinutes,
       filename: file,
     };
   });
