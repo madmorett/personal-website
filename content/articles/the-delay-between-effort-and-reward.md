@@ -4,7 +4,7 @@ date: "2026-01-18"
 description: "Culture change doesn't work at TikTok speed. It works at farming speed — you plant, nurture, wait, and hope it rains at the right time."
 tags: ["leadership", "culture", "engineering"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wv8b4j9jm4vubxk22ayu.png"
-originalUrl: "https://dev.to/matheusmorett2/o-delay-entre-esforco-e-recompensa-52dk"
+originalUrl: "https://dev.to/madmorett/o-delay-entre-esforco-e-recompensa-52dk"
 slug: "the-delay-between-effort-and-reward"
 ---
 

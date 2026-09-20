@@ -4,7 +4,7 @@ date: "2023-09-04"
 description: "How using Gherkin specifications transformed the way I think about testing and edge cases in software development."
 tags: ["testing", "agile", "engineering"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ux9fuxc401zvs4rqpoo0.png"
-originalUrl: "https://dev.to/matheusmorett2/overlooked-use-cases-in-your-tasks-5cdg"
+originalUrl: "https://dev.to/madmorett/overlooked-use-cases-in-your-tasks-5cdg"
 slug: "overlooked-use-cases-in-your-tasks"
 ---
 

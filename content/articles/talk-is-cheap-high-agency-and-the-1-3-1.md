@@ -4,7 +4,7 @@ date: "2026-08-08"
 description: "I used to be a complainer who thought he was a problem-solver. Two techniques fixed that — and changed how I design bureaucracy as a leader."
 tags: ["leadership", "career", "management"]
 image: "https://dev-to-uploads.s3.us-east-2.amazonaws.com/uploads/articles/9j93dvzn8hx9r1uyjnuz.png"
-originalUrl: "https://dev.to/matheusmorett2/talk-is-cheap-high-agency-e-a-tecnica-do-1-3-1-15em"
+originalUrl: "https://dev.to/madmorett/talk-is-cheap-high-agency-e-a-tecnica-do-1-3-1-15em"
 slug: "talk-is-cheap-high-agency-and-the-1-3-1"
 ---
 

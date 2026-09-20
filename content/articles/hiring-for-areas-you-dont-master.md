@@ -4,7 +4,7 @@ date: "2026-02-08"
 description: "How I built a security team from scratch without any security background — by leveraging my network and checking my ego."
 tags: ["leadership", "hiring", "cto"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3hjplydvlvc50408doa5.png"
-originalUrl: "https://dev.to/matheusmorett2/contratando-para-areas-que-voce-nao-domina-1gh3"
+originalUrl: "https://dev.to/madmorett/contratando-para-areas-que-voce-nao-domina-1gh3"
 slug: "hiring-for-areas-you-dont-master"
 ---
 

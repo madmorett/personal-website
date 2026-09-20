@@ -4,7 +4,7 @@ date: "2026-01-25"
 description: "When Anthropic launched MCP, my LinkedIn exploded. Everyone was implementing it — except us. Here's why that was the right call."
 tags: ["leadership", "strategy", "cto"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ggknp8lofix0sbp5vi87.png"
-originalUrl: "https://dev.to/matheusmorett2/o-medo-de-ficar-pra-tras-59ne"
+originalUrl: "https://dev.to/madmorett/o-medo-de-ficar-pra-tras-59ne"
 slug: "the-fear-of-falling-behind"
 ---
 

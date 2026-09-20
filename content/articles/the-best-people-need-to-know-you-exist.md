@@ -4,7 +4,7 @@ date: "2026-02-01"
 description: "Why sharing your real engineering challenges publicly is the most effective recruiting strategy I've found."
 tags: ["leadership", "hiring", "cto"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/c7yyby86ui94jwgfzh8c.png"
-originalUrl: "https://dev.to/matheusmorett2/as-melhores-pessoas-precisam-saber-que-voce-existe-1njd"
+originalUrl: "https://dev.to/madmorett/as-melhores-pessoas-precisam-saber-que-voce-existe-1njd"
 slug: "the-best-people-need-to-know-you-exist"
 ---
 

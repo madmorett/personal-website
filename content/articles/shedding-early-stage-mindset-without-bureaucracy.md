@@ -4,7 +4,7 @@ date: "2026-01-11"
 description: "How we scaled from 12 to 35 engineers while cutting support tickets by 50% — without killing startup speed."
 tags: ["leadership", "scaling", "engineering"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/uhg4udvjc434oz7rt2d4.png"
-originalUrl: "https://dev.to/matheusmorett2/como-tirar-o-mindset-de-early-stage-sem-criar-burocracia-3glj"
+originalUrl: "https://dev.to/madmorett/como-tirar-o-mindset-de-early-stage-sem-criar-burocracia-3glj"
 slug: "shedding-early-stage-mindset-without-bureaucracy"
 ---
 

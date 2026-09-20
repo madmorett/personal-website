@@ -4,7 +4,7 @@ date: "2024-11-03"
 description: "Type assertions feel safe but hide runtime errors. Here's why zod is almost always the better choice."
 tags: ["typescript", "engineering", "dx"]
 image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zncmicygnyq2l5akx598.png"
-originalUrl: "https://dev.to/matheusmorett2/why-you-shouldnt-use-as-in-typescript-3e5i"
+originalUrl: "https://dev.to/madmorett/why-you-shouldnt-use-as-in-typescript-3e5i"
 slug: "why-you-shouldnt-use-as-in-typescript"
 ---
 

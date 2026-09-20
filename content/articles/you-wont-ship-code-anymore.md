@@ -4,7 +4,7 @@ date: "2026-02-22"
 description: "The hardest part of becoming Head of Engineering: watching PRs you'd have written differently — and learning when not to touch them."
 tags: ["leadership", "cto", "engineering-management"]
 image: ""
-originalUrl: "https://dev.to/matheusmorett2/voce-nao-vai-entregar-mais-codigo-19nl"
+originalUrl: "https://dev.to/madmorett/voce-nao-vai-entregar-mais-codigo-19nl"
 slug: "you-wont-ship-code-anymore"
 ---
 
