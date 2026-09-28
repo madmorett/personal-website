@@ -7,7 +7,7 @@ const path = require('path')
 const { getArticles } = require('./build-articles')
 const fs = require('fs')
 
-const siteUrl = 'https://matheusmorett.com'
+const siteUrl = 'https://madmorett.com'
 const articles = getArticles()
 const projects = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../content/projects.json'), 'utf-8'))
 

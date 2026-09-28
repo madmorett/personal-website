@@ -3,10 +3,9 @@
 ## Deploy
 
 Site hospedado na Vercel, deployado sob a conta/email **matheusmorett300@hotmail.com**.
-Domínio atual: `matheusmorett.com` (projectId em `.vercel/project.json`).
-
-Pendente: apontar `madmorett.com` para o mesmo projeto e configurar 301 de
-`matheusmorett.com` → `madmorett.com`.
+Domínio canônico: `madmorett.com` (projectId em `.vercel/project.json`).
+`matheusmorett.com` faz 301 para `madmorett.com`. Canonical, sitemap, robots e
+og:url usam só `madmorett.com` (`siteUrl` em `bundler/webpack.common.js`).
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
