@@ -1,10 +1,10 @@
 ---
-title: "We Outgrew bull-board, So I Built a BullMQ Dashboard for Teams"
+title: "The Best BullMQ Dashboard for Teams: Why I Built Bullpane"
 date: "2026-09-29"
 description: "bull-board behind a VPN worked until the team grew and we needed to know who deleted a job. Taskforce gave us alerts. Neither fit, so I built Bullpane: a self-hosted BullMQ dashboard with job search, roles, an audit log, and reads that never hurt production Redis."
 tags: ["bullmq", "nodejs", "redis", "opensource"]
 image: "/images/bullpane-cover.png"
-slug: "we-outgrew-bull-board"
+slug: "best-bullmq-dashboard"
 ---
 
 At [Monest](https://monest.com.br) we run everything after the webhook on BullMQ. Messages come in, get queued, an agent drafts a reply, we send it. Today that is more than 100 million jobs a day.

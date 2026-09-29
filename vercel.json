@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/articles/we-outgrew-bull-board", "destination": "/articles/best-bullmq-dashboard/", "permanent": true },
+    { "source": "/articles/we-outgrew-bull-board/", "destination": "/articles/best-bullmq-dashboard/", "permanent": true }
+  ]
+}
