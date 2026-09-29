@@ -1,5 +1,5 @@
 ---
-title: "The Best BullMQ Dashboard for Teams: Why I Built Bullpane"
+title: "100 million BullMQ jobs a day, and the dashboard we needed to watch them"
 date: "2026-09-29"
 description: "bull-board behind a VPN worked until the team grew and we needed to know who deleted a job. Taskforce gave us alerts. Neither fit, so I built Bullpane: a self-hosted BullMQ dashboard with job search, roles, an audit log, and reads that never hurt production Redis."
 tags: ["bullmq", "nodejs", "redis", "opensource"]
